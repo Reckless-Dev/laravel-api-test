@@ -11,11 +11,8 @@ jobs:
       - browser-tools/install-browser-tools
       - checkout
 
-      - run:
-          name: "Prepare Environment"
-          command:
-            sudo apt update
-            sudo docker-php-ext-install zip
+      - run: sudo apt update
+      - run: sudo docker-php-ext-install zip
 
       - run:
           name: "Create Environment file"
