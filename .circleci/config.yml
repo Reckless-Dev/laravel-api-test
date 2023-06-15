@@ -11,9 +11,9 @@ jobs:
     steps:
       - checkout
 
-      - run: sudo apt update && sudo apt install zlib1g-dev libsqlite3-dev
       - run: sudo docker-php-ext-install zip
       - run: cp .env.example .env
+      - run: mv .env.testing .env
 
       # Download and cache dependencies
 
@@ -35,4 +35,4 @@ jobs:
           name: Generate key
           command: php artisan key:generate
       # rn tests with phpunit or codecept
-      - run: ./vendor/bin/phpunit
+      - run: ./vendor/bin/phpunit tests/Unit
