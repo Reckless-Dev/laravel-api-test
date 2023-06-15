@@ -13,7 +13,6 @@ jobs:
     steps:
       - checkout
 
-      - run: sudo docker-php-ext-install zip
       - run: cp .env.example .env
       - run: mv .env.testing .env
 
