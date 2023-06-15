@@ -9,13 +9,17 @@ jobs:
 
     steps:
       - checkout
-
-      - run: sudo apt update
-      - run: sudo docker-php-ext-install zip
+      
+      - run:
+          name: "Prepare Environment"
+          command: |
+            sudo apt update
+            sudo docker-php-ext-install zip
 
       - run:
           name: "Create Environment file"
-          command: mv .env.testing .env
+          command: |
+            mv .env.testing .env
 
       # Download and cache dependencies
       - restore_cache:
