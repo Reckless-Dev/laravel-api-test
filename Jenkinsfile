@@ -12,6 +12,10 @@ pipeline {
             steps {
                 echo 'Building...'
                 echo 'Running docker build...'
+
+                sh '''
+                    composer install --prefer-dist
+                '''
             }
         }
         stage('Test') {
@@ -46,7 +50,7 @@ pipeline {
                 ])
             }
         }
-    
+    }
     post {
         success {
             echo 'Success...'
