@@ -25,7 +25,27 @@ pipeline {
                 echo 'Running docker push...'
             }
         }
-    }
+        stage('PHPUnit Tests') {
+            steps {
+                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                    sh '''
+                        ./vendor/bin/phpunit tests/Unit
+                           
+                    '''
+                }
+
+                junit 'reports/unitreport.xml'
+
+                publishHTML([
+                    allowMissing: true,
+                    alwaysLinkToLastBuild: false,
+                    keepAll: true,
+                    reportDir: 'reports/coverage',
+                    reportFiles: 'index.html',
+                    reportName: 'PHPUnit Test Coverage Report'
+                ])
+            }
+        }
     
     post {
         success {
