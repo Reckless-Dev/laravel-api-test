@@ -1,65 +1,31 @@
 pipeline {
-    agent any
+  stages {
+		// stage("preparation") {
+    // 	git branch: 'master', url: 'https://github.com/Reckless-Dev/laravel-api-test.git'
+  	// }
 
-    stages {
-        stage('Pre-Build') {
-            steps {
-                echo 'Pre-Build...'
-                echo 'Send status Pre-Build to Mail, Telegram, Slack...'
-            }
-        }
-        stage('Build') {
-            steps {
-                echo 'Building...'
-                echo 'Running docker build...'
+    stage("composer_install") {
+    	sh 'composer install'
+  	}
 
-                sh '''
-                    composer install --prefer-dist
-                '''
-            }
-        }
-        stage('Test') {
-            steps {
-                echo 'Testing..'
-            }
-        }
-        stage('Push') {
-            steps {
-                echo 'Pushing...'
-                echo 'Running docker push...'
-            }
-        }
-        stage('PHPUnit Tests') {
-            steps {
-                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                    sh '''
-                        ./vendor/bin/phpunit tests/Unit
-                           
-                    '''
-                }
+    stage("generate_key") {
+    	sh 'php artisan key:generate'
+  	}
 
-                junit 'reports/unitreport.xml'
+		stage("phpunit") {
+			sh './vendor/bin/phpunit tests/Unit'
+		}
 
-                publishHTML([
-                    allowMissing: true,
-                    alwaysLinkToLastBuild: false,
-                    keepAll: true,
-                    reportDir: 'reports/coverage',
-                    reportFiles: 'index.html',
-                    reportName: 'PHPUnit Test Coverage Report'
-                ])
-            }
-        }
+  }
+  post {
+    success {
+        echo 'Success...'
+        echo 'Send status Success to Mail, Telegram, Slack...'
     }
-    post {
-        success {
-            echo 'Success...'
-            echo 'Send status Success to Mail, Telegram, Slack...'
-        }
-        failure {
-            echo 'Failure...'
-            echo 'Send status Failure to Mail, Telegram, Slack...'
-        }
+    failure {
+      echo 'Failure...'
+      echo 'Send status Failure to Mail, Telegram, Slack...'
     }
+  }
 
 }
