@@ -1,9 +1,5 @@
 pipeline {
-  stages {
-		// stage("preparation") {
-    // 	git branch: 'master', url: 'https://github.com/Reckless-Dev/laravel-api-test.git'
-  	// }
-
+  node {
     stage("composer_install") {
     	sh 'composer install'
   	}
