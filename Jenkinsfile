@@ -4,11 +4,11 @@
 		}
 		
     stage("composer_install") {
-    	sh 'composer install'
+    	bat 'composer install'
   	}
 
 		stage("phpunit") {
-			sh './vendor/bin/phpunit tests/Unit'
+			bat './vendor/bin/phpunit tests/Unit'
 		}
   }
 
