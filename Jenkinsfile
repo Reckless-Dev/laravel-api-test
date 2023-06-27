@@ -1,4 +1,5 @@
 pipeline {
+	agent any
 	stages {
 		stage("preparation") {
 			steps {
@@ -16,7 +17,7 @@ pipeline {
 
 		stage("phpunit") {
 			steps {
-				echo 'phpunit running...'
+				echo 'running the phpunit test...'
 				bat './vendor/bin/phpunit tests/Unit'
 			}
 		}
