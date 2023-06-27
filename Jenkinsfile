@@ -1,15 +1,25 @@
 pipeline {
+	agent any
 	stages {
-		stage('preparation') {
-			git branch: 'master', url: 'https://github.com/Reckless-Dev/laravel-api-test.git'
+		stage("preparation") {
+			steps {
+				echo 'git clone...'
+				git branch: 'master', url: 'https://github.com/Reckless-Dev/laravel-api-test.git'
+			}
 		}
 
  		stage("composer_install") {
- 			bat 'composer install'
+			steps {
+				echo 'composer install...'
+ 				bat 'composer install'
+			}
 		}
 
 		stage("phpunit") {
-			bat './vendor/bin/phpunit tests/Unit'
+			steps {
+				echo 'running the phpunit test...'
+				bat './vendor/bin/phpunit tests/Unit'
+			}
 		}
   }
 	post {
