@@ -1,14 +1,7 @@
 pipeline {
-	agent any
+	agent { docker { image 'php:8.1.0-alpine' } }
 	stages {
 		stage("Preparation") {
-			steps {
-				echo 'git clone...'
-				// git branch: 'master', url: 'https://github.com/Reckless-Dev/laravel-api-test.git'
-			}
-		}
-
- 		stage("Composer Install") {
 			steps {
 				echo 'composer install...'
  				bat 'composer install'
