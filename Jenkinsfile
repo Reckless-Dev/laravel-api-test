@@ -1,5 +1,5 @@
 pipeline {
-	agent { docker { image 'php:8.1.0-alpine' } }
+	agent any
 	stages {
 		stage("Preparation") {
 			steps {
