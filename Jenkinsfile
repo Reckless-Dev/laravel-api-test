@@ -1,14 +1,19 @@
 pipeline {
 	agent any
 	stages {
-		stage("Preparation") {
-			steps {
-				echo 'git clone...'
-				// git branch: 'master', url: 'https://github.com/Reckless-Dev/laravel-api-test.git'
-			}
-		}
 
- 		stage("Composer Install") {
+		stage('SCM') {
+  	  checkout scm
+  	}
+
+  	stage('SonarQube Analysis') {
+  	  def scannerHome = tool 'SonarScanner';
+  	  withSonarQubeEnv() {
+  	    bat "${scannerHome}/bin/sonar-scanner"
+  	  }
+  	}
+
+		stage("Preparation") {
 			steps {
 				echo 'composer install...'
  				bat 'composer install'
