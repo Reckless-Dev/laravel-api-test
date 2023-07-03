@@ -2,20 +2,19 @@ pipeline {
 	agent any
 	stages {
 
-		stage('SCM') {
-			steps{
-			  checkout scm
-			}
-  	}
-
-  	stage('SonarQube Analysis') {
-			steps{
-  	  	def scannerHome = tool 'SonarScanner';
-  	  	withSonarQubeEnv() {
-  	  	  bat "${scannerHome}/bin/sonar-scanner"
-  	  	}
-			}
-  	}
+		stage("Sonarqube") {
+    	environment {
+        scannerHome = tool 'SonarQubeScanner'
+    	}    
+			steps {
+        withSonarQubeEnv('sonarqube') {
+          bat "${scannerHome}/bin/sonar-scanner"
+        } 
+				timeout(time: 10, unit: 'MINUTES') {
+          waitForQualityGate abortPipeline: true
+        }
+    	}
+		}
 
 		stage("Preparation") {
 			steps {
