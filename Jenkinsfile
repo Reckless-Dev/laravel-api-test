@@ -1,14 +1,27 @@
 pipeline {
 	agent any
 	stages {
-		stage("Preparation") {
+
+		stage("Sonarqube") {
+    	environment {
+        scannerHome = tool 'SonarQubeScanner'
+    	}    
 			steps {
-				echo 'git clone...'
-				// git branch: 'master', url: 'https://github.com/Reckless-Dev/laravel-api-test.git'
-			}
+        withSonarQubeEnv('sonarqube') {
+          bat "${scannerHome}/bin/sonar-scanner \
+					-D sonar.login=admin \
+					-D sonar.password=Barantum~!888 \
+					-D sonar.projectKey=backend-services \
+					-D sonar.exclusion=app/http/controllers \
+					-D sonar.host.url=http://192.168.100.212:9000"
+        } 
+				// timeout(time: 10, unit: 'MINUTES') {
+        //   waitForQualityGate abortPipeline: true
+        // }
+    	}
 		}
 
- 		stage("Composer Install") {
+		stage("Preparation") {
 			steps {
 				echo 'composer install...'
  				bat 'composer install'
