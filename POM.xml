@@ -1,50 +1,315 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.sonarsource.samples</groupId>
-	<artifactId>php-custom-rules</artifactId>
-	<version>1.0-SNAPSHOT</version>
-	<packaging>sonar-plugin</packaging>
+  <parent>
+    <groupId>org.sonarsource.parent</groupId>
+    <artifactId>parent</artifactId>
+    <version>68.0.0.247</version>
+  </parent>
 
-	<name>SonarQube PHP Custom Rules Example</name>
-	<description>PHP Custom Rules Example for SonarQube</description>
-	<inceptionYear>2016</inceptionYear>
+  <groupId>org.sonarsource.php</groupId>
+  <artifactId>php</artifactId>
+  <version>${revision}</version>
+  <packaging>pom</packaging>
 
-	<properties>
-		<sonar.version>6.7</sonar.version>
-		<sonarphp.version>2.13.0.3107</sonarphp.version>
-	</properties>
+  <name>SonarSource PHP analyzer</name>
+  <url>http://redirect.sonarsource.com/plugins/php.html</url>
+  <inceptionYear>2010</inceptionYear>
+  <organization>
+    <name>SonarSource and Akram Ben Aissi</name>
+  </organization>
+  <licenses>
+    <license>
+      <name>GNU LGPL v3</name>
+      <url>http://www.gnu.org/licenses/lgpl.txt</url>
+      <distribution>repo</distribution>
+    </license>
+  </licenses>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
-				<artifactId>sonar-packaging-maven-plugin</artifactId>
-				<version>1.21.0.505</version>
-				<extensions>true</extensions>
-				<configuration>
-					<pluginKey>php-custom</pluginKey>
-					<pluginName>PHP Custom Rules</pluginName>
-					<pluginClass>org.sonar.samples.php.PHPCustomRulesPlugin</pluginClass>
-					<sonarLintSupported>true</sonarLintSupported>
-					<skipDependenciesPackaging>true</skipDependenciesPackaging>
-					<sonarQubeMinVersion>6.7</sonarQubeMinVersion>
-					<basePlugin>php</basePlugin>
-				</configuration>
-			</plugin>
+  <developers>
+    <developer>
+      <id>inverno</id>
+      <name>Carlo Bottiglieri</name>
+      <organization>SonarSource</organization>
+    </developer>
+    <developer>
+      <id>ivandalbosco</id>
+      <name>Yves Dubois-Pèlerin</name>
+      <organization>SonarSource</organization>
+    </developer>
+    <developer>
+      <id>pynicolas</id>
+      <name>Pierre-Yves Nicolas</name>
+      <organization>SonarSource</organization>
+    </developer>
+    <developer>
+      <id>vilchik-elena</id>
+      <name>Elena Vilchik</name>
+      <organization>SonarSource</organization>
+    </developer>
+  </developers>
 
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.6.0</version>
-				<configuration>
-					<source>1.8</source>
-					<target>1.8</target>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+  <modules>
+    <module>sonar-php-plugin</module>
+    <module>php-frontend</module>
+    <module>php-checks</module>
+  </modules>
+
+  <scm>
+    <connection>scm:git:git@github.com:SonarSource/sonar-php.git</connection>
+    <developerConnection>scm:git:git@github.com:SonarSource/sonar-php.git</developerConnection>
+    <url>https://github.com/SonarSource/sonar-php</url>
+    <tag>HEAD</tag>
+  </scm>
+  <issueManagement>
+    <system>JIRA</system>
+    <url>https://jira.sonarsource.com/projects/SONARPHP</url>
+  </issueManagement>
+
+  <properties>
+    <revision>3.31.0-SNAPSHOT</revision>
+    <version.enforcer.plugin>3.0.0-M3</version.enforcer.plugin>
+    <gitRepositoryName>sonar-php</gitRepositoryName>
+    <license.title>SonarQube PHP Plugin</license.title>
+    <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
+
+    <!-- plugin versions -->
+    <version.sonar-packaging-maven-plugin>1.20.0.405</version.sonar-packaging-maven-plugin>
+
+    <!-- JAR versions -->
+    <version.assertj>3.5.2</version.assertj>
+    <version.commons-lang>3.10</version.commons-lang>
+    <version.junit>4.13.1</version.junit>
+    <version.junit-jupiter>5.9.2</version.junit-jupiter>
+    <version.maven-project>2.0.6</version.maven-project>
+    <version.mockito>4.11.0</version.mockito>
+    <version.sonar>9.7.1.62043</version.sonar>
+    <version.staxmate>2.0.1</version.staxmate>
+    <version.sonar-orchestrator>3.41.0.295</version.sonar-orchestrator>
+    <version.sslr>1.24.0.633</version.sslr>
+    <version.guava>30.1.1-jre</version.guava>
+    <version.sonarlint>4.7.0.12286</version.sonarlint>
+    <version.analyzer-commons>2.5.0.1358</version.analyzer-commons>
+    <version.plugin-api>9.11.0.290</version.plugin-api>
+
+    <!-- Advertise minimal required JRE version -->
+    <jre.min.version>11</jre.min.version>
+
+    <!-- JDK Build versions -->
+    <jdk.min.version>11</jdk.min.version>
+    <jdk.source.version>11</jdk.source.version>
+    <jdk.target.version>11</jdk.target.version>
+
+    <!-- Release: enable publication to Bintray -->
+    <artifactsToPublish>${project.groupId}:sonar-php-plugin:jar</artifactsToPublish>
+
+    <!-- FIXME fix javadoc errors and remove this -->
+    <doclint>none</doclint>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <!-- Compile dependencies -->
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>php-frontend</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>php-checks</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.sonarsource.sslr</groupId>
+        <artifactId>sslr-core</artifactId>
+        <version>${version.sslr}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.sonarsource.sslr</groupId>
+        <artifactId>sslr-toolkit</artifactId>
+        <version>${version.sslr}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-lang3</artifactId>
+        <version>${version.commons-lang}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava</artifactId>
+        <version>${version.guava}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.google.code.findbugs</groupId>
+        <artifactId>jsr305</artifactId>
+        <version>1.3.9</version>
+      </dependency>
+
+
+      <!-- Test dependencies -->
+      <dependency>
+        <groupId>org.sonarsource.sonarqube</groupId>
+        <artifactId>sonar-testing-harness</artifactId>
+        <version>${version.sonar}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.sonarsource.sonarqube</groupId>
+        <artifactId>sonar-plugin-api-impl</artifactId>
+        <version>${version.sonar}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.sonarsource.sslr</groupId>
+        <artifactId>sslr-testing-harness</artifactId>
+        <version>${version.sslr}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.sonarsource.orchestrator</groupId>
+        <artifactId>sonar-orchestrator</artifactId>
+        <version>${version.sonar-orchestrator}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.sonarsource.sonarlint.core</groupId>
+        <artifactId>sonarlint-core</artifactId>
+        <version>${version.sonarlint}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.sonarsource.analyzer-commons</groupId>
+        <artifactId>sonar-analyzer-test-commons</artifactId>
+        <version>${version.analyzer-commons}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.sonarsource.analyzer-commons</groupId>
+        <artifactId>sonar-analyzer-commons</artifactId>
+        <version>${version.analyzer-commons}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.sonarsource.analyzer-commons</groupId>
+        <artifactId>sonar-xml-parsing</artifactId>
+        <version>${version.analyzer-commons}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.sonarsource.analyzer-commons</groupId>
+        <artifactId>sonar-regex-parsing</artifactId>
+        <version>${version.analyzer-commons}</version>
+      </dependency>
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>${version.junit}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter</artifactId>
+        <version>${version.junit-jupiter}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-core</artifactId>
+        <version>${version.mockito}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-inline</artifactId>
+        <version>${version.mockito}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.assertj</groupId>
+        <artifactId>assertj-core</artifactId>
+        <version>${version.assertj}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.maven</groupId>
+        <artifactId>maven-project</artifactId>
+        <version>${version.maven-project}</version>
+        <scope>test</scope>
+      </dependency>
+
+      <!-- Provided dependencies -->
+      <dependency>
+        <groupId>org.sonarsource.api.plugin</groupId>
+        <artifactId>sonar-plugin-api</artifactId>
+        <version>${version.plugin-api}</version>
+        <scope>provided</scope>
+      </dependency>
+      <!-- for now, staxmate is provided because sonar-plugin-api requires it  -->
+      <dependency>
+        <groupId>org.codehaus.staxmate</groupId>
+        <artifactId>staxmate</artifactId>
+        <version>${version.staxmate}</version>
+        <scope>provided</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>flatten-maven-plugin</artifactId>
+        <version>1.1.0</version>
+        <configuration>
+          <updatePomFile>true</updatePomFile>
+          <flattenMode>resolveCiFriendliesOnly</flattenMode>
+        </configuration>
+        <executions>
+          <execution>
+            <id>flatten</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>flatten</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>flatten.clean</id>
+            <phase>clean</phase>
+            <goals>
+              <goal>clean</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
+          <artifactId>sonar-packaging-maven-plugin</artifactId>
+          <version>${version.sonar-packaging-maven-plugin}</version>
+          <configuration>
+            <sonarLintSupported>true</sonarLintSupported>
+            <sonarQubeMinVersion>7.9</sonarQubeMinVersion>
+            <skipDependenciesPackaging>true</skipDependenciesPackaging>
+            <jreMinVersion>${jre.min.version}</jreMinVersion>
+            <archive>
+              <manifest>
+                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+              </manifest>
+            </archive>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>its</id>
+      <modules>
+        <module>its</module>
+      </modules>
+    </profile>
+  </profiles>
 
 </project>
