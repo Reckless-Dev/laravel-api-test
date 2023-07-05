@@ -50,12 +50,6 @@
     </developer>
   </developers>
 
-  <modules>
-    <module>sonar-php-plugin</module>
-    <module>php-frontend</module>
-    <module>php-checks</module>
-  </modules>
-
   <scm>
     <connection>scm:git:git@github.com:SonarSource/sonar-php.git</connection>
     <developerConnection>scm:git:git@github.com:SonarSource/sonar-php.git</developerConnection>
