@@ -1,161 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <groupId>org.sonarsource.parent</groupId>
-    <artifactId>parent</artifactId>
-    <version>68.0.0.247</version>
-  </parent>
+	<groupId>org.sonarsource.samples</groupId>
+	<artifactId>php-custom-rules</artifactId>
+	<version>1.0-SNAPSHOT</version>
+	<packaging>sonar-plugin</packaging>
 
-  <groupId>org.sonarsource.php</groupId>
-  <artifactId>php</artifactId>
-  <version>${revision}</version>
-  <packaging>pom</packaging>
+	<name>SonarQube PHP Custom Rules Example</name>
+	<description>PHP Custom Rules Example for SonarQube</description>
+	<inceptionYear>2016</inceptionYear>
 
-  <name>SonarSource PHP analyzer</name>
-  <url>http://redirect.sonarsource.com/plugins/php.html</url>
-  <inceptionYear>2010</inceptionYear>
-  <organization>
-    <name>SonarSource and Akram Ben Aissi</name>
-  </organization>
-  <licenses>
-    <license>
-      <name>GNU LGPL v3</name>
-      <url>http://www.gnu.org/licenses/lgpl.txt</url>
-      <distribution>repo</distribution>
-    </license>
-  </licenses>
+	<properties>
+		<sonar.version>6.7</sonar.version>
+		<sonarphp.version>2.13.0.3107</sonarphp.version>
+	</properties>
 
-  <developers>
-    <developer>
-      <id>inverno</id>
-      <name>Carlo Bottiglieri</name>
-      <organization>SonarSource</organization>
-    </developer>
-    <developer>
-      <id>ivandalbosco</id>
-      <name>Yves Dubois-Pèlerin</name>
-      <organization>SonarSource</organization>
-    </developer>
-    <developer>
-      <id>pynicolas</id>
-      <name>Pierre-Yves Nicolas</name>
-      <organization>SonarSource</organization>
-    </developer>
-    <developer>
-      <id>vilchik-elena</id>
-      <name>Elena Vilchik</name>
-      <organization>SonarSource</organization>
-    </developer>
-  </developers>
+	<dependencies>
+		<dependency>
+			<groupId>org.sonarsource.sonarqube</groupId>
+			<artifactId>sonar-plugin-api</artifactId>
+			<version>${sonar.version}</version>
+			<scope>provided</scope>
+		</dependency>
 
-  <scm>
-    <connection>scm:git:git@github.com:SonarSource/sonar-php.git</connection>
-    <developerConnection>scm:git:git@github.com:SonarSource/sonar-php.git</developerConnection>
-    <url>https://github.com/SonarSource/sonar-php</url>
-    <tag>HEAD</tag>
-  </scm>
-  <issueManagement>
-    <system>JIRA</system>
-    <url>https://jira.sonarsource.com/projects/SONARPHP</url>
-  </issueManagement>
+		<dependency>
+			<groupId>org.sonarsource.php</groupId>
+			<artifactId>sonar-php-plugin</artifactId>
+			<type>sonar-plugin</type>
+			<version>${sonarphp.version}</version>
+			<scope>provided</scope>
+		</dependency>
 
-  <properties>
-    <revision>3.31.0-SNAPSHOT</revision>
-    <version.enforcer.plugin>3.0.0-M3</version.enforcer.plugin>
-    <gitRepositoryName>sonar-php</gitRepositoryName>
-    <license.title>SonarQube PHP Plugin</license.title>
-    <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.13.1</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 
-    <!-- plugin versions -->
-    <version.sonar-packaging-maven-plugin>1.20.0.405</version.sonar-packaging-maven-plugin>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
+				<artifactId>sonar-packaging-maven-plugin</artifactId>
+				<version>1.21.0.505</version>
+				<extensions>true</extensions>
+				<configuration>
+					<pluginKey>php-custom</pluginKey>
+					<pluginName>PHP Custom Rules</pluginName>
+					<pluginClass>org.sonar.samples.php.PHPCustomRulesPlugin</pluginClass>
+					<sonarLintSupported>true</sonarLintSupported>
+					<skipDependenciesPackaging>true</skipDependenciesPackaging>
+					<sonarQubeMinVersion>6.7</sonarQubeMinVersion>
+					<basePlugin>php</basePlugin>
+				</configuration>
+			</plugin>
 
-    <!-- JAR versions -->
-    <version.assertj>3.5.2</version.assertj>
-    <version.commons-lang>3.10</version.commons-lang>
-    <version.junit>4.13.1</version.junit>
-    <version.junit-jupiter>5.9.2</version.junit-jupiter>
-    <version.maven-project>2.0.6</version.maven-project>
-    <version.mockito>4.11.0</version.mockito>
-    <version.sonar>9.7.1.62043</version.sonar>
-    <version.staxmate>2.0.1</version.staxmate>
-    <version.sonar-orchestrator>3.41.0.295</version.sonar-orchestrator>
-    <version.sslr>1.24.0.633</version.sslr>
-    <version.guava>30.1.1-jre</version.guava>
-    <version.sonarlint>4.7.0.12286</version.sonarlint>
-    <version.analyzer-commons>2.5.0.1358</version.analyzer-commons>
-    <version.plugin-api>9.11.0.290</version.plugin-api>
-
-    <!-- Advertise minimal required JRE version -->
-    <jre.min.version>11</jre.min.version>
-
-    <!-- JDK Build versions -->
-    <jdk.min.version>11</jdk.min.version>
-    <jdk.source.version>11</jdk.source.version>
-    <jdk.target.version>11</jdk.target.version>
-
-    <!-- FIXME fix javadoc errors and remove this -->
-    <doclint>none</doclint>
-  </properties>
-
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>flatten-maven-plugin</artifactId>
-        <version>1.1.0</version>
-        <configuration>
-          <updatePomFile>true</updatePomFile>
-          <flattenMode>resolveCiFriendliesOnly</flattenMode>
-        </configuration>
-        <executions>
-          <execution>
-            <id>flatten</id>
-            <phase>process-resources</phase>
-            <goals>
-              <goal>flatten</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>flatten.clean</id>
-            <phase>clean</phase>
-            <goals>
-              <goal>clean</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>org.sonarsource.sonar-packaging-maven-plugin</groupId>
-          <artifactId>sonar-packaging-maven-plugin</artifactId>
-          <version>${version.sonar-packaging-maven-plugin}</version>
-          <configuration>
-            <sonarLintSupported>true</sonarLintSupported>
-            <sonarQubeMinVersion>7.9</sonarQubeMinVersion>
-            <skipDependenciesPackaging>true</skipDependenciesPackaging>
-            <jreMinVersion>${jre.min.version}</jreMinVersion>
-            <archive>
-              <manifest>
-                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
-              </manifest>
-            </archive>
-          </configuration>
-        </plugin>
-      </plugins>
-    </pluginManagement>
-  </build>
-
-  <profiles>
-    <profile>
-      <id>its</id>
-      <modules>
-        <module>its</module>
-      </modules>
-    </profile>
-  </profiles>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.6.0</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>
