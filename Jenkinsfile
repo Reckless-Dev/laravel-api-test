@@ -41,7 +41,6 @@ pipeline {
 	        -D sonar.language=php \
 	        -D sonar.exclusions=vendor/** \
 					-D sonar.verbose=true \
-					-D sonar.analysis.mode=issues \
 	        -D sonar.host.url=http://192.168.100.212:9000/"""
 	      }
 			}
