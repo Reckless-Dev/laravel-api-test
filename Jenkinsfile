@@ -27,7 +27,9 @@ pipeline {
 
     stage('SonarQube Analysis') {
 			steps {
-	    	def scannerHome = tool 'sonarqube'
+				script {
+	    		def scannerHome = tool 'sonarqube'
+				}
 	      withSonarQubeEnv('sonarqube-server') {
 	      	bat """C:/ProgramData/Jenkins/.jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/SonarQubeScanner/bin/sonar-scanner \
 	     		-D sonar.projectVersion=1.0-SNAPSHOT \
