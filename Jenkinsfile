@@ -8,6 +8,25 @@ pipeline {
 			}
 		}
 
+		stage('clonning from GIT'){
+			checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: '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', url: 'https://github.com/Reckless-Dev/laravel-api-test.git']])
+    }
+
+    stage('SonarQube Analysis') {
+    	def scannerHome = tool 'sonarqube'
+      withSonarQubeEnv('sonarqube-server') {
+      	bat """C:/ProgramData/Jenkins/.jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/SonarQubeScanner/bin/sonar-scanner \
+     		-D sonar.projectVersion=1.0-SNAPSHOT \
+       	-D sonar.login=admin \
+      	-D sonar.password=Barantum~!888 \
+        -D sonar.projectKey=backend-services \
+        -D sonar.sourceEncoding=UTF-8 \
+        -D sonar.language=php \
+        -D sonar.exclusions=app/Http/Middleware/*.php \
+        -D sonar.host.url=http://192.168.100.212:9000/"""
+      }
+		}
+
  		stage("Composer Install") {
 			steps {
 				echo 'composer install...'
