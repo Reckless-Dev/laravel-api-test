@@ -40,6 +40,7 @@ pipeline {
 	        -D sonar.sourceEncoding=UTF-8 \
 	        -D sonar.language=php \
 	        -D sonar.exclusions=app/Http/Middleware/*.php \
+					-D sonar.verbose=true \
 	        -D sonar.host.url=http://192.168.100.212:9000/"""
 	      }
 			}
