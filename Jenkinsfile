@@ -39,9 +39,9 @@ pipeline {
 	        -D sonar.projectKey=${SONAR_PROJECT_KEY} \
 	        -D sonar.sourceEncoding=UTF-8 \
 	        -D sonar.language=php \
-	        -D sonar.exclusions=app/Http/Middleware/*.php \
+	        -D sonar.exclusions=vendor/** \
 					-D sonar.verbose=true \
-					-D sonar.analysis.mode=preview \
+					-D sonar.analysis.mode=issues \
 	        -D sonar.host.url=http://192.168.100.212:9000/"""
 	      }
 			}
