@@ -6,7 +6,7 @@
 def SONAR_PROJECT_KEY = 'backend-services'
 
 // The token of your SonarQube project
-def SONAR_TOKEN = 'sqp_c6fddbc2f0baea58adce669567c037c8af4f9799'
+def SONAR_TOKEN = 'sqp_432e307af2052a05e4ab757f88033c46d99b15c5'
 // ================================================================================================
 
 pipeline {
