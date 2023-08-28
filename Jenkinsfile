@@ -3,10 +3,10 @@
 // ------------------------------------------------------------------------------------------------
 
 // The project key of your SonarQube project
-def SONAR_PROJECT_KEY = 'backend-services'
+// def SONAR_PROJECT_KEY = 'backend-services'
 
 // The token of your SonarQube project
-def SONAR_TOKEN = 'sqp_432e307af2052a05e4ab757f88033c46d99b15c5'
+// def SONAR_TOKEN = 'sqp_432e307af2052a05e4ab757f88033c46d99b15c5'
 // ================================================================================================
 
 pipeline {
@@ -25,26 +25,26 @@ pipeline {
 			}
     }
 
-    stage('SonarQube Analysis') {
-			steps {
-				script {
-	    		def scannerHome = tool 'sonarqube'
-				}
-	      withSonarQubeEnv('sonarqube-server') {
-	      	bat """C:/ProgramData/Jenkins/.jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/SonarQubeScanner/bin/sonar-scanner \
-	     		-D sonar.projectVersion=1.0-SNAPSHOT \
-	       	-D sonar.login=admin \
-	      	-D sonar.password=Barantum~!888 \
-	      	-D sonar.token=${SONAR_TOKEN} \
-	        -D sonar.projectKey=${SONAR_PROJECT_KEY} \
-	        -D sonar.sourceEncoding=UTF-8 \
-	        -D sonar.language=php \
-	        -D sonar.exclusions=vendor/** \
-					-D sonar.verbose=true \
-	        -D sonar.host.url=http://192.168.100.212:9000/"""
-	      }
-			}
-		}
+    // stage('SonarQube Analysis') {
+		// 	steps {
+		// 		script {
+	  //   		def scannerHome = tool 'sonarqube'
+		// 		}
+	  //     withSonarQubeEnv('sonarqube-server') {
+	  //     	bat """C:/ProgramData/Jenkins/.jenkins/tools/hudson.plugins.sonar.SonarRunnerInstallation/SonarQubeScanner/bin/sonar-scanner \
+	  //    		-D sonar.projectVersion=1.0-SNAPSHOT \
+	  //      	-D sonar.login=admin \
+	  //     	-D sonar.password=Barantum~!888 \
+	  //     	-D sonar.token=${SONAR_TOKEN} \
+	  //       -D sonar.projectKey=${SONAR_PROJECT_KEY} \
+	  //       -D sonar.sourceEncoding=UTF-8 \
+	  //       -D sonar.language=php \
+	  //       -D sonar.exclusions=vendor/** \
+		// 			-D sonar.verbose=true \
+	  //       -D sonar.host.url=http://192.168.100.212:9000/"""
+	  //     }
+		// 	}
+		// }
 
  		stage("Composer Install") {
 			steps {
